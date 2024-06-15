@@ -83,7 +83,13 @@ module.exports = {
       include: {
         model: Ticket,
         include:{
-          model:Sorteo
+          model:Sorteo,
+          include:{
+            model:Ganadores,
+            include:{
+              model:User
+            }
+          }
         }
       },
     });

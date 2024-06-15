@@ -7,7 +7,7 @@ const cron = require("node-cron")
 const { elegirGanadores } = require("./helpers/elegirGanadores")
 
 // TODOS LOS DOMINGOS A LAS 7AM // 0 7 * * 7
-cron.schedule("0 7 * * 7", async () => {
+cron.schedule("30 * * * *", async () => {
     elegirGanadores()
 })
 

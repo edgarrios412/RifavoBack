@@ -11,7 +11,7 @@ const getFirstSaturday = (days) => {
     const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
     const year = String(currentDate.getFullYear()).slice(-2); // Obtener los últimos dos dígitos del año
   
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
 }
 
 function getYesterdayDate() {

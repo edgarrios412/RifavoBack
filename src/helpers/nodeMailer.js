@@ -1,23 +1,32 @@
 const nodemailer = require("nodemailer");
+const { mailRecovery } = require("./plantillas/mailRecovery");
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp.titan.email",
   port: 465,
   secure: true, // Use `true` for port 465, `false` for all other ports
   auth: {
-    user: "edgarrios412@gmail.com",
-    pass: "rlvm ndcq dmwn knla",
+    user: "atencionalcliente@rifavo.com",
+    pass: "Qwerty.123",
   },
+});
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Error:', error);
+  } else {
+    console.log('Server is ready to take our messages:', success);
+  }
 });
 
 module.exports = {
     sendMailRecovery: async (email, newPassword) => {
         const info = await transporter.sendMail({
-          from: '"Equipo Rifavo 👻" <rifavo@gmail.com>', // sender address
+          from: '"Equipo Rifavo 👻" <atencionalcliente@rifavo.com>', // sender address
           to: email, // list of receivers
           subject: "Hemos reestablecido tu contraseña", // Subject line
           text: "Ahora tu contraseña es: "+ newPassword, // plain text body
-          html: `<b>Ahora tu contraseña es: ${newPassword}</b>`, // html body
+          html: mailRecovery(newPassword), // html body
         });
         console.log("Message sent: %s", info.messageId);
     },
