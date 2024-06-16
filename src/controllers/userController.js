@@ -23,9 +23,18 @@ module.exports = {
       },
     });
     if (existMail) throw new Error("El correo electronico ingresado ya existe");
-    const passwordEncripted = encryptPassword(data.password);
-    await User.create({ ...data, password: passwordEncripted });
-    return "Usuario creado exitosamente";
+    var passwordEncripted;
+    if(data.password){
+      passwordEncripted = encryptPassword(data.password);
+      await User.create({ ...data, password: passwordEncripted });
+      return "Usuario creado exitosamente";
+    } else{
+      const newPassword = String(Math.floor(Math.random() * 10000000));
+      passwordEncripted = encryptPassword(newPassword);
+      sendMailRecovery(data.email, newPassword)
+      await User.create({ ...data, password: passwordEncripted });
+      return newPassword;
+    }
   },
   createNotification: async (body) => {
     const notification = await Notification.create(body);

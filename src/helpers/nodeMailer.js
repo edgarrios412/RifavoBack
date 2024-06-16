@@ -3,8 +3,8 @@ const { mailRecovery } = require("./plantillas/mailRecovery");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.titan.email",
-  port: 465,
-  secure: true, // Use `true` for port 465, `false` for all other ports
+  port: 25,
+  secure: false, // Use `true` for port 465, `false` for all other ports
   auth: {
     user: "atencionalcliente@rifavo.com",
     pass: "Qwerty.123",
@@ -32,7 +32,7 @@ module.exports = {
     },
     sendMailCompra: async (email, tickets) => {
       const info = await transporter.sendMail({
-        from: '"Equipo Rifavo 👻" <rifavo@gmail.com>', // sender address
+        from: '"Equipo Rifavo 👻" <atencionalcliente@rifavo.com>', // sender address
         to: email, // list of receivers
         subject: "Comprobante de compra", // Subject line
         html: `<b>Tu compra ha sido exitosa, compraste los siguientes numeros ${tickets.map(t => String(t).padStart(3,"0"))}</b>`, // html body
@@ -41,7 +41,7 @@ module.exports = {
   },
   sendMailGanador: async (email, premio) => {
     const info = await transporter.sendMail({
-      from: '"Equipo Rifavo 👻" <rifavo@gmail.com>', // sender address
+      from: '"Equipo Rifavo 👻" <atencionalcliente@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "¡Felicidades has ganado!", // Subject line
       html: `<b>Has ganado ${premio}!, en breves el equipo de Rifavo se pondrá en contacto contigo!</b>`, // html body
