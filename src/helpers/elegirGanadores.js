@@ -51,7 +51,7 @@ const elegirGanadores = async () => {
                     premioEntregado: false,
                     ticketId: ganadorUno.id
                 })
-                sendMailGanador(ganadorUno.user.email, sorteo.premio1+ " con el número "+numeroGanadorUno+ " en la loteria de Boyacá")
+                sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
             }
             if(ganadorDos){
                 await Ganadores.create({
@@ -61,7 +61,7 @@ const elegirGanadores = async () => {
                     premioEntregado: false,
                     ticketId: ganadorDos.id
                 })
-                sendMailGanador(ganadorDos.user.email, sorteo.premio2+ " con el número "+numeroGanadorDos+ " en la loteria Cauca")
+                sendMailGanador(ganadorDos.user.email, sorteo.premio2, numeroGanadorDos, "Loteria Cauca")
             }
             if(ganadorTres){
                 await Ganadores.create({
@@ -71,7 +71,7 @@ const elegirGanadores = async () => {
                     premioEntregado: false,
                     ticketId: ganadorTres.id
                 })
-                sendMailGanador(ganadorTres.user.email, sorteo.premio3+ " con el número "+numeroGanadorTres+ " en la loteria Pijao Noche")
+                sendMailGanador(ganadorTres.user.email, sorteo.premio3, numeroGanadorTres, "Loteria Pijao Noche")
             }
         }
     }

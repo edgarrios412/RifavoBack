@@ -1,4 +1,4 @@
-const mailRecovery = (newPassword) => {
+const mailCompra = (numerosComprados) => {
     return(
         `<div
   id=":ne"
@@ -21,7 +21,7 @@ const mailRecovery = (newPassword) => {
           overflow: hidden;
         "
       >
-        Tu nueva contraseña para ingresar a Rifavo es
+        Has comprado los siguientes números en Rifavo
       </div>
       <div
         style="
@@ -690,7 +690,7 @@ const mailRecovery = (newPassword) => {
                                           margin-bottom: 0;
                                         "
                                       >
-                                        Hemos reestablecido tu contraseña
+                                        Tu compra ha sido exitosa
                                       </h1>
                                     </td>
                                   </tr>
@@ -752,27 +752,29 @@ const mailRecovery = (newPassword) => {
                                         "
                                       >
                                         <p style="margin: 0">
-                                          Hemos creado una nueva contraseña para tu cuenta 
-                                          <strong>RIFAVO</strong
-                                          >.
-                                          Para acceder a tu cuenta usa esta contraseña:
+                                          Has adquirido los siguientes números:  
                                           <br></br>
                                           <br></br>
-                                          <br></br>
-                                          <strong
+                                          <div style="display: grid;grid-template-columns: repeat(8, minmax(0, 1fr));">
+                                          ${numerosComprados.map( n => `<strong
                                             style="
                                           color: #000000;
                                           font-family: 'Open Sans', Arial,
                                             Sans-serif;
-                                          font-size: 20px;
-                                          font-weight: 1000;
+                                          font-size: 16px;
+                                          font-weight: 700;
                                           text-align: center;
                                           margin-top: 20px;
                                           background-color: #F1F1F1;
                                           border-radius: 10px;
                                           padding: 10px;
-                                        ">${newPassword}</strong
-                                          >
+                                        ">${n}</strong
+                                          >`)}
+                                          </div>
+                                          <br></br>
+                                          <br></br>
+                                          Te deseamos suerte!
+                                          <br></br>
                                         </p>
                                       </div>
                                     </td>
@@ -1377,4 +1379,4 @@ const mailRecovery = (newPassword) => {
     )
 }
 
-module.exports = {mailRecovery}
+module.exports = {mailCompra}

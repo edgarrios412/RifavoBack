@@ -1,4 +1,4 @@
-const mailRecovery = (newPassword) => {
+const mailGanador = (numero, loteria, premio) => {
     return(
         `<div
   id=":ne"
@@ -21,7 +21,7 @@ const mailRecovery = (newPassword) => {
           overflow: hidden;
         "
       >
-        Tu nueva contraseña para ingresar a Rifavo es
+        Que buena suerte tienes!
       </div>
       <div
         style="
@@ -690,7 +690,7 @@ const mailRecovery = (newPassword) => {
                                           margin-bottom: 0;
                                         "
                                       >
-                                        Hemos reestablecido tu contraseña
+                                        ¡Felicidades has ganado el sorteo!
                                       </h1>
                                     </td>
                                   </tr>
@@ -752,11 +752,7 @@ const mailRecovery = (newPassword) => {
                                         "
                                       >
                                         <p style="margin: 0">
-                                          Hemos creado una nueva contraseña para tu cuenta 
-                                          <strong>RIFAVO</strong
-                                          >.
-                                          Para acceder a tu cuenta usa esta contraseña:
-                                          <br></br>
+                                          Con el ${numero} de la ${loteria}, has ganado el siguiente premio:
                                           <br></br>
                                           <br></br>
                                           <strong
@@ -771,8 +767,11 @@ const mailRecovery = (newPassword) => {
                                           background-color: #F1F1F1;
                                           border-radius: 10px;
                                           padding: 10px;
-                                        ">${newPassword}</strong
+                                        ">${premio}</strong
                                           >
+                                          <br></br>
+                                          <br></br>
+                                          En breves en equipo de Rifavo se pondrá en contacto contigo!
                                         </p>
                                       </div>
                                     </td>
@@ -1377,4 +1376,4 @@ const mailRecovery = (newPassword) => {
     )
 }
 
-module.exports = {mailRecovery}
+module.exports = {mailGanador}

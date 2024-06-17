@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer");
 const { mailRecovery } = require("./plantillas/mailRecovery");
+const { mailCompra } = require("./plantillas/mailCompra");
+const { mailGanador } = require("./plantillas/mailGanador");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.titan.email",
@@ -35,16 +37,16 @@ module.exports = {
         from: '"Equipo Rifavo 👻" <atencionalcliente@rifavo.com>', // sender address
         to: email, // list of receivers
         subject: "Comprobante de compra", // Subject line
-        html: `<b>Tu compra ha sido exitosa, compraste los siguientes numeros ${tickets.map(t => String(t).padStart(3,"0"))}</b>`, // html body
+        html: mailCompra(tickets.map(t => String(t).padStart(3,"0"))), // html body
       });
       console.log("Message sent: %s", info.messageId);
   },
-  sendMailGanador: async (email, premio) => {
+  sendMailGanador: async (email, premio, numero, loteria) => {
     const info = await transporter.sendMail({
       from: '"Equipo Rifavo 👻" <atencionalcliente@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "¡Felicidades has ganado!", // Subject line
-      html: `<b>Has ganado ${premio}!, en breves el equipo de Rifavo se pondrá en contacto contigo!</b>`, // html body
+      html: mailGanador(numero, loteria, premio), // html body
     });
     console.log("Message sent: %s", info.messageId);
 }
