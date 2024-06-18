@@ -13,7 +13,7 @@ const {
   encryptPassword,
   verifyPassword,
 } = require("../helpers/encryptPassword");
-const { sendMailRecovery } = require("../helpers/nodeMailer");
+const { sendMailRecovery, sendMailRegister } = require("../helpers/nodeMailer");
 
 module.exports = {
   newUser: async (data) => {
@@ -31,7 +31,7 @@ module.exports = {
     } else{
       const newPassword = String(Math.floor(Math.random() * 10000000));
       passwordEncripted = encryptPassword(newPassword);
-      sendMailRecovery(data.email, newPassword)
+      sendMailRegister(data.email, newPassword)
       await User.create({ ...data, password: passwordEncripted });
       return newPassword;
     }

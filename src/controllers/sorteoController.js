@@ -54,6 +54,7 @@ module.exports = {
                 model:User
             }]
         })
+        if(!ticket) throw new Error("No pudimos encontrar el ticket con el ID "+id)
         return ticket
     }
 }
