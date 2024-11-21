@@ -13,7 +13,8 @@ const {
   encryptPassword,
   verifyPassword,
 } = require("../helpers/encryptPassword");
-const { sendMailRecovery, sendMailRegister } = require("../helpers/nodeMailer");
+// const { sendMailRecovery, sendMailRegister } = require("../helpers/nodeMailer");
+const crypto = require('crypto');
 
 module.exports = {
   newUser: async (data) => {
@@ -31,10 +32,16 @@ module.exports = {
     } else{
       const newPassword = String(Math.floor(Math.random() * 10000000));
       passwordEncripted = encryptPassword(newPassword);
-      sendMailRegister(data.email, newPassword)
+      // sendMailRegister(data.email, newPassword)
       await User.create({ ...data, password: passwordEncripted });
       return newPassword;
     }
+  },
+  newPay: async ({amountInCents,currency,reference, integrityKey}) => {
+    const cadenaConcatenada = `${amountInCents}|${currency}|${reference}`;
+    const hmac = crypto.createHmac('sha256', integrityKey);
+    hmac.update(cadenaConcatenada);
+    return hmac.digest('hex');
   },
   createNotification: async (body) => {
     const notification = await Notification.create(body);
@@ -197,7 +204,7 @@ module.exports = {
     const passwordEncripted = encryptPassword(newPassword);
     usuario.password = passwordEncripted;
     usuario.save();
-    sendMailRecovery(data.email, newPassword);
+    // sendMailRecovery(data.email, newPassword);
     return "Te hemos enviado un correo electrónico con tu nueva contraseña";
   },
   addHistorial: async (body) => {

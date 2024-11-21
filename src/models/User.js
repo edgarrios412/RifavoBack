@@ -35,6 +35,11 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: () => new Date()
-    }
+    },
+    role:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue:0,
+    },
   },{timestamps:false});
 };

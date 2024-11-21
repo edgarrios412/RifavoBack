@@ -1,13 +1,23 @@
 const {Router} = require("express")
 const userRoutes = Router()
-const {newUser,recoveryPassword, readAllNotification, verifyUser, authUser, putUser, getUsers, getUser, getUserByToken, deleteUser, createTicket, changePassword, createNotification, addHistorial, setResponseTicket, getTickets, generateKey} = require("../controllers/userController")
-const { sendMail } = require("../helpers/nodeMailer")
+const {newUser,recoveryPassword, readAllNotification, verifyUser, authUser, putUser, getUsers, getUser, getUserByToken, deleteUser, createTicket, changePassword, createNotification, addHistorial, setResponseTicket, getTickets, generateKey, newPay} = require("../controllers/userController")
+// const { sendMail } = require("../helpers/nodeMailer")
 
 userRoutes.get("/", async (req,res) => {
     try{
         const users = await getUsers()
         res.json(users)
 
+    }
+    catch(error){
+        res.status(403).json(error.message)
+    }
+})
+
+userRoutes.post("/pay/integrity", async (req,res) => {
+    try{
+        const users = await newPay(req.body)
+        res.json(users)
     }
     catch(error){
         res.status(403).json(error.message)

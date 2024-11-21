@@ -1,6 +1,6 @@
 const {Sorteo, Ticket, User} = require("../db")
 const jwt = require("jsonwebtoken")
-const { sendMailCompra } = require("../helpers/nodeMailer")
+// const { sendMailCompra } = require("../helpers/nodeMailer")
 const { getFirstSaturday } = require("../helpers/getFirstSaturday")
 
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
         // SI YA SE VENDIERON LOS TICKETS NECESARIO, AGREGARLE FECHA AL SORTEO
         // EL SORTEO DEBE SER EL PRIMER SABADO DESPUÉS DE 45 DIAS
         await Ticket.bulkCreate(tickets)
-        sendMailCompra(user.email, data.tickets)
+        // sendMailCompra(user.email, data.tickets)
         const sorteo = await Sorteo.findByPk(data.sorteoId,{
             include:{
                 model:Ticket
