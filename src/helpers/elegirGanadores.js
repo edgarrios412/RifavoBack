@@ -12,7 +12,7 @@ const elegirGanadores = async () => {
   const { data: apiSorteo } = await axios.get(
     "https://api-resultadosloterias.com/api/results/2024-11-17"
   );
-  const loteriasParaExtraer = ["Boyaca"];
+  const loteriasParaExtraer = ["CULONA NOCHE FESTIVO", "CHONTICO DIA FESTIVO", "CULONA DIA FESTIVO"];
   const resultados = extraerResultadosLoteria(
     loteriasParaExtraer,
     apiSorteo.data
@@ -52,7 +52,6 @@ const elegirGanadores = async () => {
               String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
               numeroGanadorUno
           );
-          console.log(ganadorUno.user.email)
   
           // Si hay ganador enviar un correo de alerta
           if (ganadorUno) {
@@ -83,11 +82,20 @@ const elegirGanadores = async () => {
           .slice(-cantidadDeNumeros)
           .padStart(cantidadDeNumeros, "0");
           console.log(numeroGanadorUno)
+        const numeroGanadorDos = resultados[1].result
+          .toString()
+          .slice(-cantidadDeNumeros)
+          .padStart(cantidadDeNumeros, "0");
+        const numeroGanadorTres = resultados[2].result
+          .toString()
+          .slice(-cantidadDeNumeros)
+          .padStart(cantidadDeNumeros, "0");
+        
 
         // Se colocan los numeros ganadores en la DB
         sorteo.numTicketGanadorP1 = numeroGanadorUno;
-        // sorteo.numTicketGanadorP2 = numeroGanadorDos;
-        // sorteo.numTicketGanadorP3 = numeroGanadorTres;
+        sorteo.numTicketGanadorP2 = numeroGanadorDos;
+        sorteo.numTicketGanadorP3 = numeroGanadorTres;
         sorteo.save();
 
         // Buscar los usuarios ganadores
@@ -96,16 +104,16 @@ const elegirGanadores = async () => {
             String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
             numeroGanadorUno
         );
-        // const ganadorDos = sorteo.tickets.find(
-        //   (ticket) =>
-        //     String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
-        //     numeroGanadorDos
-        // );
-        // const ganadorTres = sorteo.tickets.find(
-        //   (ticket) =>
-        //     String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
-        //     numeroGanadorTres
-        // );
+        const ganadorDos = sorteo.tickets.find(
+          (ticket) =>
+            String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
+            numeroGanadorDos
+        );
+        const ganadorTres = sorteo.tickets.find(
+          (ticket) =>
+            String(ticket.numero).padStart(cantidadDeNumeros, "0") ==
+            numeroGanadorTres
+        );
 
         // Si hay ganador enviar un correo de alerta
         if (ganadorUno) {
@@ -118,24 +126,24 @@ const elegirGanadores = async () => {
           });
           // sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
         }
-        // if (ganadorDos) {
-        //   await Ganadores.create({
-        //     userId: ganadorDos.user.id,
-        //     sorteoId: sorteo.id,
-        //     premioNumero: 2,
-        //     premioEntregado: false,
-        //     ticketId: ganadorDos.id,
-        //   });
-        // }
-        // if (ganadorTres) {
-        //   await Ganadores.create({
-        //     userId: ganadorTres.user.id,
-        //     sorteoId: sorteo.id,
-        //     premioNumero: 3,
-        //     premioEntregado: false,
-        //     ticketId: ganadorTres.id,
-        //   });
-        // }
+        if (ganadorDos) {
+          await Ganadores.create({
+            userId: ganadorDos.user.id,
+            sorteoId: sorteo.id,
+            premioNumero: 2,
+            premioEntregado: false,
+            ticketId: ganadorDos.id,
+          });
+        }
+        if (ganadorTres) {
+          await Ganadores.create({
+            userId: ganadorTres.user.id,
+            sorteoId: sorteo.id,
+            premioNumero: 3,
+            premioEntregado: false,
+            ticketId: ganadorTres.id,
+          });
+        }
       }
     }
   }

@@ -30,7 +30,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Ticket, Sorteo, Ganadores} = sequelize.models;
+const { User, Ticket, Sorteo, Ganadores, Compras} = sequelize.models;
 
 // const packChar = sequelize.define('pack_char', {
 //   // Definición de otros campos de la tabla intermedia
@@ -43,6 +43,12 @@ const { User, Ticket, Sorteo, Ganadores} = sequelize.models;
 
 User.hasMany(Ticket)
 Ticket.belongsTo(User)
+
+User.hasMany(Compras)
+Compras.belongsTo(User)
+
+Sorteo.hasMany(Compras)
+Compras.belongsTo(Sorteo)
 
 Sorteo.hasMany(Ticket)
 Ticket.belongsTo(Sorteo)

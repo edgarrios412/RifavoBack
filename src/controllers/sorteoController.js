@@ -1,4 +1,4 @@
-const {Sorteo, Ticket, User} = require("../db")
+const {Sorteo, Ticket, User, Compras, Ganadores} = require("../db")
 const jwt = require("jsonwebtoken")
 // const { sendMailCompra } = require("../helpers/nodeMailer")
 const { getFirstSaturday } = require("../helpers/getFirstSaturday")
@@ -15,9 +15,13 @@ module.exports = {
     getSorteoById: (id) => {
         const sorteo = Sorteo.findByPk(id,{
             include:{
-                model:Ticket
+                model:Ticket,
+                include: {
+                    model: User,
+                },
             }
         })
+        if(!sorteo) throw new Error("No pudimos encontrar el sorteo con el ID "+id)
         return sorteo
     },
     comprarTickets: async (data) => {
@@ -46,10 +50,22 @@ module.exports = {
         }
         return "Tickets comprados exitosamente"
     },
+    procesarCompraTickets: async (data) => {
+        const compra = await Compras.create(data)
+        return compra
+    },
     buscarTicket: async (id) => {
         const ticket = await Ticket.findByPk(id,{
             include:[{
-                model:Sorteo
+                model:Sorteo,
+                include:[{
+                    model:Ganadores,
+                    include:[{
+                        model:User
+                    },{
+                        model:Ticket,
+                    }]
+                }]
             },{
                 model:User
             }]

@@ -115,6 +115,20 @@ module.exports = {
     const token = createToken({ id: user.id });
     return { user, token };
   },
+  putUserRef: async ({monto, father, firstDiscount, userId}) => {
+    const userRef = await User.findByPk(father);
+    if(firstDiscount){
+      const user = await User.findByPk(userId);
+      user.firstDiscount = false;
+      user.save();
+    }
+    if (userRef) {
+      userRef.income += monto;
+      userRef.save();
+      return "Se han enviado los ingresos";
+    }
+    else return "No se ha encontrado el usuario";
+  },
   putUser: async (data) => {
     let user;
     if (data.newpass) {

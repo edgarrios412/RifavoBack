@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
       primaryKey:true,
       autoIncrement:true,
     },
+    email:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     role: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -23,10 +27,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    email:{
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     password:{
       type: DataTypes.STRING,
       allowNull: true,
@@ -40,6 +40,21 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue:0,
+    },
+    income:{
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue:0,
+    },
+    firstDiscount:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue:false,
+    },
+    father:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue:null,
     },
   },{timestamps:false});
 };
