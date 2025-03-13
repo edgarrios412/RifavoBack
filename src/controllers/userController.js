@@ -13,7 +13,7 @@ const {
   encryptPassword,
   verifyPassword,
 } = require("../helpers/encryptPassword");
-// const { sendMailRecovery, sendMailRegister } = require("../helpers/nodeMailer");
+const { sendMailRecovery, sendMailRegister } = require("../helpers/nodeMailer");
 const crypto = require('crypto');
 
 module.exports = {
@@ -28,11 +28,12 @@ module.exports = {
     if(data.password){
       passwordEncripted = encryptPassword(data.password);
       await User.create({ ...data, password: passwordEncripted });
+      // sendMailRegister(data.email, newPassword)
       return "Usuario creado exitosamente";
     } else{
       const newPassword = String(Math.floor(Math.random() * 10000000));
       passwordEncripted = encryptPassword(newPassword);
-      // sendMailRegister(data.email, newPassword)
+      sendMailRegister(data.email, newPassword)
       await User.create({ ...data, password: passwordEncripted });
       return newPassword;
     }
@@ -218,7 +219,7 @@ module.exports = {
     const passwordEncripted = encryptPassword(newPassword);
     usuario.password = passwordEncripted;
     usuario.save();
-    // sendMailRecovery(data.email, newPassword);
+    sendMailRecovery(data.email, newPassword);
     return "Te hemos enviado un correo electrónico con tu nueva contraseña";
   },
   addHistorial: async (body) => {

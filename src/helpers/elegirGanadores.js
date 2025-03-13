@@ -4,7 +4,7 @@ const { default: axios } = require("axios");
 const {
   extraerResultadosLoteria,
 } = require("../helpers/extraerResultadosLoteria");
-// const { sendMailGanador } = require("../helpers/nodeMailer")
+const { sendMailGanador } = require("../helpers/nodeMailer")
 
 const elegirGanadores = async () => {
   const sorteos = await Sorteo.findAll();
@@ -62,7 +62,7 @@ const elegirGanadores = async () => {
               premioEntregado: false,
               ticketId: ganadorUno.id,
             });
-            // sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
+            sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
           }
       } else {
         // AQUI DEBO ASIGNAR EL NUMERO GANADOR AL SORTEO
@@ -124,7 +124,7 @@ const elegirGanadores = async () => {
             premioEntregado: false,
             ticketId: ganadorUno.id,
           });
-          // sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
+          sendMailGanador(ganadorUno.user.email, sorteo.premio1, numeroGanadorUno, "Loteria de Boyacá")
         }
         if (ganadorDos) {
           await Ganadores.create({

@@ -1,4 +1,35 @@
-const mailCompra = (numerosComprados) => {
+
+const mailCompra = (numerosComprados, sorteoId) => {
+  const gridHtml = numerosComprados.map(n => `
+    <strong
+      style="
+        color: #000000;
+        font-family: 'Open Sans', Arial, Sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 20px;
+        background-color: #F1F1F1;
+        border-radius: 10px;
+        padding: 10px;
+      "
+    >
+      ${n}
+    </strong>
+  `).join(""); // Usa join para juntar todos los elementos generados
+  
+  // Envuelve los números dentro de un contenedor grid
+  const gridContainer = `
+    <div style="
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 elementos por fila */
+      gap: 10px; /* Espacio entre los elementos */
+      margin-top: 20px;
+    ">
+      ${gridHtml}
+    </div>
+  `;
+
     return(
         `<div
   id=":ne"
@@ -497,35 +528,6 @@ const mailCompra = (numerosComprados) => {
                                                                                             "
                                                                                             valign="middle"
                                                                                           >
-                                                                                            <a
-                                                                                              href="https://www.rifavo.com"
-                                                                                              rel="noopener"
-                                                                                              style="
-                                                                                                background: #f2f3f5;
-                                                                                                border-radius: 4px;
-                                                                                                color: #2f3337;
-                                                                                                display: inline-block;
-                                                                                                font-family: 'Open Sans',
-                                                                                                  Arial,
-                                                                                                  sans
-                                                                                                    serif;
-                                                                                                font-size: 14px;
-                                                                                                font-weight: 600;
-                                                                                                line-height: 160%;
-                                                                                                margin: 0;
-                                                                                                padding: 9px
-                                                                                                  16px;
-                                                                                                text-decoration: none;
-                                                                                                text-transform: none;
-                                                                                                letter-spacing: 0.005em;
-                                                                                              "
-                                                                                              target="_blank"
-                                                                                              data-saferedirecturl="https://www.google.com/url?q=https://l.engage.canva.com/ss/c/u001.Note3it1gaozj0PIggVG9oVnloPSosqhTH6UZTRGfiVkSHFhrgTyc2Kcfg9aJH0OgMjeD1ixALTrs411BO1HiEOz5ACv_nTJ6kZPyHLQsLydIPxWIEkQMGV8gtL3suc7mUzA_ks_HFEZyyVc3Eoeun8fwiU_UqWghmA4V0FTfYzOOxbXqTuGLM0esx6R4GyR/46c/55iYln0bS_uBXKo14YSuKQ/h15/h001.r_87BgDdOJr02D7aZdv-Wr4OfgPDIKLCHowYVKIT910&amp;source=gmail&amp;ust=1715786600980000&amp;usg=AOvVaw3px7AyZGDlAm1vNmgty3xi"
-                                                                                            >
-                                                                                              <span
-                                                                                                >¿Yo hice esto?</span
-                                                                                              >
-                                                                                            </a>
                                                                                           </td>
                                                                                         </tr>
                                                                                       </tbody>
@@ -755,22 +757,7 @@ const mailCompra = (numerosComprados) => {
                                           Has adquirido los siguientes números:  
                                           <br></br>
                                           <br></br>
-                                          <div style="display: grid;grid-template-columns: repeat(8, minmax(0, 1fr));">
-                                          ${numerosComprados.map( n => `<strong
-                                            style="
-                                          color: #000000;
-                                          font-family: 'Open Sans', Arial,
-                                            Sans-serif;
-                                          font-size: 16px;
-                                          font-weight: 700;
-                                          text-align: center;
-                                          margin-top: 20px;
-                                          background-color: #F1F1F1;
-                                          border-radius: 10px;
-                                          padding: 10px;
-                                        ">${n}</strong
-                                          >`)}
-                                          </div>
+                                          ${gridContainer}
                                           <br></br>
                                           <br></br>
                                           Te deseamos suerte!
@@ -804,7 +791,7 @@ const mailCompra = (numerosComprados) => {
                                       <div align="left">
                                         <a
                                           class="m_-7376276815480440195w-full"
-                                          href="https://www.rifavo.com"
+                                          href="https://www.rifavo.com/sorteo/${sorteoId}"
                                           style="
                                             text-decoration: none;
                                             display: inline-block;
@@ -842,7 +829,7 @@ const mailCompra = (numerosComprados) => {
                                                 word-break: break-word;
                                                 line-height: 28px;
                                               "
-                                              >Ingresa en RIFAVO</span
+                                              >Ver SORTEO</span
                                             ></span
                                           ></a
                                         >

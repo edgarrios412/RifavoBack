@@ -6,11 +6,11 @@ const { mailGanador } = require("./plantillas/mailGanador");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.titan.email",
-  port: 25,
-  secure: false, // Use `true` for port 465, `false` for all other ports
+  port: 465, // Cambia a 465 si estás usando SSL
+  secure: true, // Cambia a `true` si usas el puerto 465
   auth: {
-    user: "atencionalcliente@rifavo.com",
-    pass: "Qwerty.123",
+    user: "admin@rifavo.com",
+    pass: "Rifavo2025.com",
   },
 });
 
@@ -25,7 +25,7 @@ transporter.verify((error, success) => {
 module.exports = {
   sendMailRegister: async (email, newPassword) => {
     const info = await transporter.sendMail({
-      from: '"Equipo Rifavo" <atencionalcliente@rifavo.com>', // sender address
+      from: '"Equipo Rifavo" <admin@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "Bienvenido a RIFAVO", // Subject line
       text: "Estos son tus datos de acceso a Rifavo", // plain text body
@@ -35,7 +35,7 @@ module.exports = {
   },
   sendMailRecovery: async (email, newPassword) => {
     const info = await transporter.sendMail({
-      from: '"Equipo Rifavo" <atencionalcliente@rifavo.com>', // sender address
+      from: '"Equipo Rifavo" <admin@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "Hemos reestablecido tu contraseña", // Subject line
       text: "Ahora tu contraseña es: " + newPassword, // plain text body
@@ -43,18 +43,18 @@ module.exports = {
     });
     console.log("Message sent: %s", info.messageId);
   },
-  sendMailCompra: async (email, tickets) => {
+  sendMailCompra: async (email, tickets, sorteoId) => {
     const info = await transporter.sendMail({
-      from: '"Equipo Rifavo" <atencionalcliente@rifavo.com>', // sender address
+      from: '"Equipo Rifavo" <admin@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "Comprobante de compra", // Subject line
-      html: mailCompra(tickets.map((t) => String(t).padStart(3, "0"))), // html body
+      html: mailCompra(tickets.map((t) => String(t).padStart(3, "0")), sorteoId), // html body
     });
     console.log("Message sent: %s", info.messageId);
   },
   sendMailGanador: async (email, premio, numero, loteria) => {
     const info = await transporter.sendMail({
-      from: '"Equipo Rifavo" <atencionalcliente@rifavo.com>', // sender address
+      from: '"Equipo Rifavo" <admin@rifavo.com>', // sender address
       to: email, // list of receivers
       subject: "¡Felicidades has ganado!", // Subject line
       html: mailGanador(numero, loteria, premio), // html body
