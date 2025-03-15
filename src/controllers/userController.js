@@ -80,12 +80,6 @@ module.exports = {
         model: Ticket,
         include:{
           model:Sorteo,
-          include:{
-            model:Ganadores,
-            include:{
-              model:User
-            }
-          }
         }
       },
     });
@@ -101,12 +95,6 @@ module.exports = {
         model: Ticket,
         include:{
           model:Sorteo,
-          include:{
-            model:Ganadores,
-            include:{
-              model:User
-            }
-          }
         }
       },
     });

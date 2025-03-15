@@ -46,7 +46,7 @@ sorteoRoutes.get("/buscar/ticket/:id", async (req, res) => {
       const tickets = await buscarTicket(req.params.id);
       res.json(tickets);
   } catch (error) {
-    console.log(error);
+    res.status(403).json(error.message);
   }
 });
 
