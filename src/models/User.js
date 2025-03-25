@@ -59,6 +59,7 @@ module.exports = (sequelize) => {
     tag:{
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue:null,
     },
   },{timestamps:false});
 };
