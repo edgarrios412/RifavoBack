@@ -25,16 +25,17 @@ module.exports = {
     });
     if (existMail) throw new Error("El correo electronico ingresado ya existe");
     var passwordEncripted;
+    const father = await User.findOne({where:{tag:data.tag}});
     if(data.password){
       passwordEncripted = encryptPassword(data.password);
-      await User.create({ ...data, password: passwordEncripted });
+      await User.create({ ...data, password: passwordEncripted, father:father.id || null });
       // sendMailRegister(data.email, newPassword)
       return "Usuario creado exitosamente";
     } else{
       const newPassword = String(Math.floor(Math.random() * 10000000));
       passwordEncripted = encryptPassword(newPassword);
       sendMailRegister(data.email, newPassword)
-      await User.create({ ...data, password: passwordEncripted });
+      await User.create({ ...data, password: passwordEncripted, father:father.id || null });
       return newPassword;
     }
   },
