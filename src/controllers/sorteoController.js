@@ -52,23 +52,23 @@ module.exports = {
     return "Tickets comprados exitosamente";
   },
   comprarTicketsFisico: async ({sorteo, user}) => {
-    let user;
-    user = await User.findOne({ where: { email: user.email } });
-    if(!user){
-        user = await User.create(user);
-        user = await User.findOne({ where: { email: user.email } });
+    let usuario;
+    usuario = await User.findOne({ where: { email: user.email } });
+    if(!usuario){
+        usuario = await User.create(user);
+        usuario = await User.findOne({ where: { email: user.email } });
     }
     const tickets = sorteo.tickets.map((t) => {
       return {
         numero: t,
-        userId: user.id,
+        userId: usuario.id,
         sorteoId: sorteo.sorteoId,
       };
     });
     // SI YA SE VENDIERON LOS TICKETS NECESARIO, AGREGARLE FECHA AL SORTEO
     // EL SORTEO DEBE SER EL PRIMER SABADO DESPUÉS DE 45 DIAS
     await Ticket.bulkCreate(tickets);
-    sendMailCompra(user.email, sorteo.tickets, sorteo.sorteoId);
+    sendMailCompra(usuario.email, sorteo.tickets, sorteo.sorteoId);
     const sort = await Sorteo.findByPk(sorteo.sorteoId, {
       include: {
         model: Ticket,
