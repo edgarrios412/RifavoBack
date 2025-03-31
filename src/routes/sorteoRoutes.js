@@ -6,6 +6,7 @@ const {
   comprarTickets,
   buscarTicket,
   procesarCompraTickets,
+  comprarTicketsFisico,
 } = require("../controllers/sorteoController");
 
 sorteoRoutes.get("/listar/:id", async (req, res) => {
@@ -26,6 +27,15 @@ sorteoRoutes.get("/listar/:id", async (req, res) => {
 sorteoRoutes.post("/comprar/tickets", async (req, res) => {
   try {
       const tickets = await comprarTickets(req.body);
+      res.json(tickets);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+sorteoRoutes.post("/comprar/tickets/fisico", async (req, res) => {
+  try {
+      const tickets = await comprarTicketsFisico(req.body);
       res.json(tickets);
   } catch (error) {
     console.log(error);
