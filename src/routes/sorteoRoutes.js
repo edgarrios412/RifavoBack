@@ -33,7 +33,7 @@ sorteoRoutes.post("/comprar/tickets", async (req, res) => {
   }
 });
 
-sorteoRoutes.post("/comprar/tickets/fisico", async (req, res) => {
+sorteoRoutes.post("/comprar/ticketsFisico", async (req, res) => {
   try {
       const tickets = await comprarTicketsFisico(req.body);
       res.json(tickets);
