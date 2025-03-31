@@ -1,7 +1,8 @@
 const { Sorteo, Ticket, User, Compras, Ganadores } = require("../db");
 const jwt = require("jsonwebtoken");
-const { sendMailCompra } = require("../helpers/nodeMailer");
+const { sendMailCompra, sendMailRegister } = require("../helpers/nodeMailer");
 const { getFirstSaturday } = require("../helpers/getFirstSaturday");
+const { encryptPassword } = require("../helpers/encryptPassword");
 
 module.exports = {
   getSorteos: () => {
@@ -51,12 +52,20 @@ module.exports = {
     }
     return "Tickets comprados exitosamente";
   },
-  comprarTicketsFisico: async ({sorteo, user}) => {
+  comprarTicketsFisico: async ({ sorteo, user, monto }) => {
     let usuario;
     usuario = await User.findOne({ where: { email: user.email } });
-    if(!usuario){
-        usuario = await User.create(user);
-        usuario = await User.findOne({ where: { email: user.email } });
+    if (!usuario) {
+      const newPassword = String(Math.floor(Math.random() * 10000000));
+      passwordEncripted = encryptPassword(newPassword);
+      usuario = await User.create({ ...user, password: passwordEncripted });
+      usuario = await User.findOne({ where: { email: user.email } });
+      sendMailRegister(user.email, newPassword);
+    }
+    const userRef = await User.findByPk(user.father);
+    if (userRef) {
+      userRef.income += monto;
+      userRef.save();
     }
     const tickets = sorteo.tickets.map((t) => {
       return {
